@@ -1,0 +1,33 @@
+SIMPLE RAILWAY MANAGEMENT SYSTEM - USER STORY
+
+ - Ability to create trains with number of rail car
+ - Ability to create rail car templates, each includes:
+   + Class
+   + Number of seat
+   + Price of one seat (all seat in a rail car has the same price)
+ - In creation of a train, when user must select a rail car template. This template is applied to all rail cars of the train.
+
+ - Ability to create station
+ - Ability to create track from two specific stations
+
+ - Ability to create collections of ticket for a tour:
+   + Each tour reqires:
+     ~ A track
+     ~ A train
+     ~ A schedule of start time and end time
+   + Each ticket (belong to a tour and has the tour information) requires:
+     ~ A seat code
+     ~ Price: refer from selected train
+     ~ Status
+
+ - When employee sells a ticket, some extra information recorded including:
+   + Passenger Information
+     ~ First name
+     ~ Last name
+     ~ Phone number
+     ~ Permanent address
+   + Time of selling  
+
+ - Each of these entities: train, seat, ticket, station, track, rail car template must has unique identity readable to humans (known as Code)
+
+ - Information of train, track, ticket, rail car template can be maintained and updated. 
