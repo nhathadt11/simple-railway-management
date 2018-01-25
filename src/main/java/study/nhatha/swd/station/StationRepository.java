@@ -15,22 +15,56 @@ public class StationRepository implements Repository<Station> {
 
   @Override
   public void add(Station item) {
-
+    String sql = "INSERT INTO station(code, name) values(?, ?)";
+    try ( Connection connection = Database.getConnection();
+          PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, item.getCode());
+      statement.setString(2, item.getName());
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void add(Iterable<Station> items) {
-
+    String sql = "INSERT INTO state(code, name) values(?, ?)";
+    try ( Connection connection = Database.getConnection();
+          PreparedStatement statement = connection.prepareStatement(sql)) {
+      for (Station station : items) {
+        statement.setString(1, station.getCode());
+        statement.setString(2, station.getName());
+        statement.executeUpdate();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void update(Station item) {
-
+    String sql = "UPDATE station SET code = ?, name = ? WHERE id = ?";
+    try ( Connection connection = Database.getConnection();
+          PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, item.getCode());
+      statement.setString(2, item.getName());
+      statement.setInt(3, item.getId());
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void delete(Station item) {
-
+    String sql = "DELETE FROM station WHERE id = ?";
+    try ( Connection connection = Database.getConnection();
+          PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, item.getId());
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
