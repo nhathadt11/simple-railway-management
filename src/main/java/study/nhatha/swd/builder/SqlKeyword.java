@@ -10,6 +10,9 @@ public final class SqlKeyword {
   public static final String ALL = "*";
   public static final String AND = "AND";
   public static final String OR = "OR";
+  public static final String ROUND_BRACKET_OPEN = "(";
+  public static final String ROUND_BRACKET_CLOSE = ")";
+  public static final String QUESTION_MARK = "?";
 
   private SqlKeyword() {
   }
