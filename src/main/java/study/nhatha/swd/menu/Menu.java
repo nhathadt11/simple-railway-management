@@ -1,26 +1,17 @@
 package study.nhatha.swd.menu;
 
+import study.nhatha.swd.console.Inputer;
 import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.util.Strings;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Menu {
   private static final String DECORATION = "---------------------";
   private String name;
   private Map<String, Action> optionToAction;
-  private Scanner keyboard;
 
   private Menu() {
-    this.keyboard = new Scanner(System.in);
-  }
-
-  public Menu(String name) {
-    this();
-    this.name = name;
-    this.optionToAction = new LinkedHashMap<>();
   }
 
   public Menu(String name, Map<String, Action> optionToAction) {
@@ -35,17 +26,27 @@ public class Menu {
   }
 
   public void doMenu() {
-    int userSelectedIndex;
-    Action action;
-    do {
+    int selected;
+    while (true) {
       show();
-      Printer.inline("Your choice (0 to quit): ");
+      selected = selectOption();
 
-      userSelectedIndex = Integer.parseInt(keyboard.nextLine());
-      action = (Action) optionToAction.values().toArray()[userSelectedIndex - 1];
+      if (selected == -1) return;
 
-      action.doAction();
-    } while (userSelectedIndex != 0);
+      doWithOption(selected);
+    }
+  }
+
+  private void doWithOption(int optionIndex) {
+    ((Action)
+        optionToAction
+        .values()
+        .toArray()[optionIndex]
+    ).doAction();
+  }
+
+  private int selectOption() {
+    return Inputer.requestInt("Your choice (0 to quit): ") - 1;
   }
 
   private void printName() {
