@@ -70,9 +70,35 @@ public class StationRepository implements Repository<Station> {
   }
 
   @Override
-  public List<Station> query() {
-
+  public Station query(Station item) {
     return null;
+  }
+
+  @Override
+  public Station query(int itemId) {
+    return null;
+  }
+
+  @Override
+  public Station queryByCode(String code) {
+    String sql = "SELECT * FROM station WHERE code = ?";
+    Station found = null;
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, code);
+      ResultSet cursor = statement.executeQuery();
+      if (cursor.next()) {
+        found = new Station(
+            cursor.getInt("id"),
+            cursor.getString("code"),
+            cursor.getString("name")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return found;
   }
 
   @Override

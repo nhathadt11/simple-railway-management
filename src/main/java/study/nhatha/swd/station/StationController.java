@@ -1,43 +1,100 @@
 package study.nhatha.swd.station;
 
+import study.nhatha.swd.console.Inputer;
+import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.generic.AppController;
+import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.util.Notification;
 
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class StationController implements AppController<Station>{
+public class StationController implements AppController{
   private StationRepository stationRepository;
+  private Menu menu;
 
-  public StationController(StationRepository stationRepository) {
-    this.stationRepository = stationRepository;
+  public StationController() {
+    this.stationRepository = new StationRepository();
+    this.initMenu();
+  }
+
+  private void initMenu() {
+    Map<String, Menu.Action> actions = new LinkedHashMap<>();
+
+    actions.put("1. Add",       StationController.this::add);
+    actions.put("2. Add Many",  StationController.this::addMany);
+    actions.put("3. Update",    StationController.this::update);
+    actions.put("4. Delete",    StationController.this::delete);
+    actions.put("5. Find",      StationController.this::find);
+    actions.put("6. List",      StationController.this::all);
+
+    menu = new Menu("STATION", actions);
   }
 
   @Override
-  public void add(Station item) {
-
+  public void add() {
+    stationRepository.add(requestStation());
   }
 
   @Override
-  public void add(Iterable<Station> item) {
-
+  public void addMany() {
+    Notification.error("Unsupported feature.");
   }
 
   @Override
-  public void update(Station item) {
+  public void update() {
+    String code = Inputer.requestString("Find Code? ");
 
+    Station found = stationRepository.queryByCode(code);
+    if (found != null) {
+      Printer.inline("Update for: ");
+      Printer.newline(" | ", found.getCode(), found.getName());
+
+      Station station = requestStation();
+      station.setId(found.getId());
+
+      stationRepository.update(station);
+      Notification.success("Station updated.");
+    } else {
+      Notification.error("Station cannot be found.");
+    }
   }
 
   @Override
-  public void delete(Station item) {
+  public void delete() {
+    String code = Inputer.requestString("Find Code? ");
 
+    Station found = stationRepository.queryByCode(code);
+    if (found != null) {
+      stationRepository.delete(found);
+    } else {
+      Notification.error("Station cannot be found");
+    }
   }
 
   @Override
-  public Station find(Station item) {
-    return null;
+  public void find() {
+    Notification.error("Unsupported feature.");
   }
 
   @Override
-  public List<Station> all(Station item) {
-    return null;
+  public void all() {
+    Printer.manyWithHeaders(
+        Station.HEADERS_FORMAT,
+        Station.HEADERS,
+        stationRepository.queryAll()
+    );
+  }
+
+  @Override
+  public void doMenu() {
+    menu.doMenu();
+  }
+
+  private Station requestStation() {
+    String code = Inputer.requestString("Code: ");
+    String name = Inputer.requestString("Name: ");
+
+    return new Station(code, name);
   }
 }

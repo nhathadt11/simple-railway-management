@@ -1,6 +1,8 @@
 package study.nhatha.swd.station;
 
 public class Station {
+  public static final String HEADERS_FORMAT = "%-10s %-10s %-10s";
+  public static final String[] HEADERS = new String[]{ "ID", "Code", "Name" };
   private int id;
   private String code;
   private String name;

@@ -1,9 +1,10 @@
 package study.nhatha.swd;
 
-import study.nhatha.swd.console.Printer;
-import study.nhatha.swd.station.StationRepository;
-import study.nhatha.swd.util.Database;
-import java.util.Objects;
+import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.station.StationController;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 /**
@@ -14,13 +15,12 @@ public class App
 {
   public static void main( String[] args )
   {
-    Objects.requireNonNull(Database.getConnection(), "Problem connecting to server");
-    System.out.println("Connection established");
-    StationRepository stationRepository = new StationRepository();
-    Printer.printWithHeaders(
-        "%-10s %-10s %s%n",
-        new String[] {"Id", "Code", "Name"},
-        stationRepository.queryAll()
-    );
+    StationController stationController = new StationController();
+
+    Map<String, Menu.Action> actions = new LinkedHashMap<>();
+    actions.put("1. Station", stationController::doMenu);
+
+    Menu mainMenu = new Menu("MAIN", actions);
+    mainMenu.doMenu();
   }
 }

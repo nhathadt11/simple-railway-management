@@ -7,6 +7,8 @@ public interface Repository<T> {
   void add(Iterable<T> items);
   void update(T item);
   void delete(T item);
-  List<T> query();
+  T query(T item);
+  T query(int itemId);
+  T queryByCode(String code);
   List<T> queryAll();
 }
