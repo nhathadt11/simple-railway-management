@@ -2,14 +2,13 @@ package study.nhatha.swd.ticket;
 
 import study.nhatha.swd.generic.Repository;
 import study.nhatha.swd.util.Database;
-import study.nhatha.swd.util.Sql;
+import study.nhatha.swd.util.Strings;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,7 +49,7 @@ public class TicketRepository implements Repository<Ticket> {
 
   @Override
   public void add(Ticket ticket) {
-    String values = Sql.makeJoin(QUESTION_MARK, 11, COMMA);
+    String values = Strings.makeJoin(QUESTION_MARK, 11, COMMA);
 
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT INTO ticket");
@@ -97,18 +96,18 @@ public class TicketRepository implements Repository<Ticket> {
     sql.append("id = ?");
 
     try (PreparedStatement statement = connection.prepareStatement(sql.toString())) {
-      statement.setString(1, ticket.getCode());
-      statement.setString(2, ticket.getName());
-      statement.setString(3, ticket.getTourCode());
-      statement.setString(4, ticket.getTourName());
-      statement.setString(5, ticket.getTrainCode());
-      statement.setString(6, ticket.getSeatCode());
-      statement.setFloat(7, ticket.getPrice());
-      statement.setString(8, ticket.getCustomer().getFirstName());
-      statement.setString(9, ticket.getCustomer().getLastName());
+      statement.setString(1,  ticket.getCode());
+      statement.setString(2,  ticket.getName());
+      statement.setString(3,  ticket.getTourCode());
+      statement.setString(4,  ticket.getTourName());
+      statement.setString(5,  ticket.getTrainCode());
+      statement.setString(6,  ticket.getSeatCode());
+      statement.setFloat(7,   ticket.getPrice());
+      statement.setString(8,  ticket.getCustomer().getFirstName());
+      statement.setString(9,  ticket.getCustomer().getLastName());
       statement.setString(10, ticket.getCustomer().getPhoneNumber());
       statement.setString(11, ticket.getCustomer().getPermanentAddress());
-      statement.setInt(12, ticket.getId());
+      statement.setInt(12,    ticket.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -127,8 +126,17 @@ public class TicketRepository implements Repository<Ticket> {
   }
 
   @Override
-  public List<Ticket> query() {
+  public Ticket query(Ticket item) {
+    return null;
+  }
 
+  @Override
+  public Ticket query(int itemId) {
+    return null;
+  }
+
+  @Override
+  public Ticket queryByCode(String code) {
     return null;
   }
 

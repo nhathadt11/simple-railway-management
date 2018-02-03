@@ -70,8 +70,17 @@ public class TrainRepository implements Repository<Train> {
   }
 
   @Override
-  public List<Train> query() {
+  public Train query(Train item) {
+    return null;
+  }
 
+  @Override
+  public Train query(int itemId) {
+    return null;
+  }
+
+  @Override
+  public Train queryByCode(String code) {
     return null;
   }
 

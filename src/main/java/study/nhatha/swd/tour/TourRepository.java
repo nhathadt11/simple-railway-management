@@ -32,7 +32,7 @@ public class TourRepository implements Repository<Tour> {
 
   @Override
   public void add(Iterable<Tour> tours) {
-    tours.forEach(tour -> add(tour));
+    tours.forEach(this::add);
   }
 
   @Override
@@ -61,8 +61,17 @@ public class TourRepository implements Repository<Tour> {
   }
 
   @Override
-  public List<Tour> query() {
+  public Tour query(Tour item) {
+    return null;
+  }
 
+  @Override
+  public Tour query(int itemId) {
+    return null;
+  }
+
+  @Override
+  public Tour queryByCode(String code) {
     return null;
   }
 
