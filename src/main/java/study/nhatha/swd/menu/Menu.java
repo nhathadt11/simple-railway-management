@@ -1,6 +1,8 @@
 package study.nhatha.swd.menu;
 
-import java.util.HashMap;
+import study.nhatha.swd.console.Printer;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -16,7 +18,7 @@ public class Menu {
   public Menu(String name) {
     this();
     this.name = name;
-    this.optionToAction = new HashMap<>();
+    this.optionToAction = new LinkedHashMap<>();
   }
 
   public Menu(String name, Map<String, Action> optionToAction) {
@@ -31,13 +33,17 @@ public class Menu {
   }
 
   public void doMenu() {
-    show();
-    System.out.print("Your choice: ");
+    int userSelectedIndex;
+    Action action;
+    do {
+      show();
+      Printer.inline("Your choice (0 to quit): ");
 
-    int optionIndex = Integer.parseInt(keyboard.nextLine());
-    optionToAction.get(
-        String.valueOf(optionIndex)
-    ).doMenu();
+      userSelectedIndex = Integer.parseInt(keyboard.nextLine());
+      action = (Action) optionToAction.values().toArray()[userSelectedIndex - 1];
+
+      action.doAction();
+    } while (userSelectedIndex != 0);
   }
 
   private void printName() {
@@ -45,11 +51,15 @@ public class Menu {
   }
 
   private void printOptions() {
-    optionToAction.keySet().forEach(System.out::println);
+    optionToAction.keySet().forEach(Printer::newline);
   }
 
   @FunctionalInterface
   public interface Action {
+    void doAction();
+  }
+
+  public interface Doable {
     void doMenu();
   }
 }
