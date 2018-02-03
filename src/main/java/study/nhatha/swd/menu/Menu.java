@@ -1,12 +1,14 @@
 package study.nhatha.swd.menu;
 
 import study.nhatha.swd.console.Printer;
+import study.nhatha.swd.util.Strings;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Menu {
+  private static final String DECORATION = "---------------------";
   private String name;
   private Map<String, Action> optionToAction;
   private Scanner keyboard;
@@ -47,7 +49,9 @@ public class Menu {
   }
 
   private void printName() {
-    System.out.println(this.name);
+    Printer.newline(
+        Strings.makeJoin(DECORATION, 2, this.name.toUpperCase())
+    );
   }
 
   private void printOptions() {
