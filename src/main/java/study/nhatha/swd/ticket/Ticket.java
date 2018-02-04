@@ -1,39 +1,50 @@
 package study.nhatha.swd.ticket;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Ticket {
+  private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yy-MM-dd HH:mm");
+  public static final String HEADERS_FORMAT = "%5s %-15s %-15s %-15s %-15s %-15s %-15s %15s %-20s %-15s %-15s %-15s";
+  public static final String[] HEADERS = new String[]{
+      "ID", "Code", "Name", "Tour Code", "Tour Name", "Train Code", "Price", "Created At",
+      "First name", "Last Name", "Phone", "Permanent Address"
+  };
   private int id;
   private String code;
   private String name;
   private String tourCode;
   private String tourName;
   private String trainCode;
-  private String seatCode;
   private Date createdAt;
   private float price;
   private Customer customer;
 
-  public Ticket(int id, String code, String name, String tourCode, String tourName, String trainCode, String seatCode, Date createdAt, float price) {
+  public Ticket(String code, String name, String tourCode) {
+    this.code = code;
+    this.name = name;
+    this.tourCode = tourCode;
+  }
+
+  public Ticket(int id, String code, String name, String tourCode, String tourName, String trainCode, Date createdAt, float price) {
     this.id = id;
     this.code = code;
     this.name = name;
     this.tourCode = tourCode;
     this.tourName = tourName;
     this.trainCode = trainCode;
-    this.seatCode = seatCode;
     this.createdAt = createdAt;
     this.price = price;
   }
 
-  public Ticket(int id, String code, String name, String tourCode, String tourName, String trainCode, String seatCode, Date createdAt, float price, Customer customer) {
+  public Ticket(int id, String code, String name, String tourCode, String tourName, String trainCode, Date createdAt, float price, Customer customer) {
     this.id = id;
     this.code = code;
     this.name = name;
     this.tourCode = tourCode;
     this.tourName = tourName;
     this.trainCode = trainCode;
-    this.seatCode = seatCode;
     this.createdAt = createdAt;
     this.price = price;
     this.customer = customer;
@@ -87,14 +98,6 @@ public class Ticket {
     this.trainCode = trainCode;
   }
 
-  public String getSeatCode() {
-    return seatCode;
-  }
-
-  public void setSeatCode(String seatCode) {
-    this.seatCode = seatCode;
-  }
-
   public Date getCreatedAt() {
     return createdAt;
   }
@@ -122,8 +125,9 @@ public class Ticket {
   @Override
   public String toString() {
     return String.format(
-        "%5d %10s %10s %10s %10s %10s %10s %10s %10s %70s",
-        id, code, name, tourCode, tourName, trainCode, seatCode, price, createdAt, customer
+        "%5d %-15s %-15s %-15s %-15s %-15s %15f %-20s %-15s %-15s %-15s %-15s",
+        id, code, name, tourCode, tourName, trainCode, price, DATE_FORMAT.format(createdAt),
+        customer.getFirstName(), customer.getLastName(), customer.getPhoneNumber(), customer.getPermanentAddress()
     );
   }
 
