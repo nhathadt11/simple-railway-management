@@ -33,7 +33,7 @@ public class StationRepository implements Repository<Station> {
 
   @Override
   public void add(Iterable<Station> stations) {
-    String sql = "INSERT INTO state(code, name) values(?, ?)";
+    String sql = "INSERT INTO station(code, name) values(?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       for (Station station : stations) {
         statement.setString(1, station.getCode());
