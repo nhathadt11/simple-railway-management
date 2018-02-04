@@ -1,6 +1,5 @@
 package study.nhatha.swd.tour;
 
-import study.nhatha.swd.builder.SqlSelectQuery;
 import study.nhatha.swd.generic.Repository;
 import study.nhatha.swd.util.Database;
 
@@ -19,11 +18,15 @@ public class TourRepository implements Repository<Tour> {
   }
 
   @Override
-  public void add(Tour item) {
-    String sql = "INSERT INTO station(code, name) values(?, ?)";
+  public void add(Tour tour) {
+    String sql = "INSERT INTO tour(code, name, trackId, trainId, timeStart, timeEnd) VALUES(?, ?, ?, ?, ?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, item.getCode());
-      statement.setString(2, item.getName());
+      statement.setString (1, tour.getCode());
+      statement.setString (2, tour.getName());
+      statement.setInt    (3, idByCode("track", tour.getTrackCode()));
+      statement.setInt    (4, idByCode("train", tour.getTrainCode()));
+      statement.setDate   (5, tour.getTimeStart());
+      statement.setDate   (6, tour.getTimeEnd());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -36,12 +39,17 @@ public class TourRepository implements Repository<Tour> {
   }
 
   @Override
-  public void update(Tour item) {
-    String sql = "UPDATE station SET code = ?, name = ? WHERE id = ?";
+  public void update(Tour tour) {
+    String sql = "UPDATE tour SET code = ?, name = ?, trackId = ?, trainId = ?, timeStart = ?, timeEnd = ? WHERE id = ?";
+
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, item.getCode());
-      statement.setString(2, item.getName());
-      statement.setInt(3, item.getId());
+      statement.setString (1, tour.getCode());
+      statement.setString (2, tour.getName());
+      statement.setInt    (3, idByCode("track", tour.getTrackCode()));
+      statement.setInt    (4, idByCode("train", tour.getTrainCode()));
+      statement.setDate   (5, tour.getTimeStart());
+      statement.setDate   (6, tour.getTimeEnd());
+      statement.setInt    (7, tour.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -49,11 +57,11 @@ public class TourRepository implements Repository<Tour> {
   }
 
   @Override
-  public void delete(Tour item) {
-    String sql = "DELETE FROM station WHERE id = ?";
+  public void delete(Tour tour) {
+    String sql = "DELETE FROM tour WHERE id = ?";
     try ( Connection connection = Database.getConnection();
           PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, item.getId());
+      statement.setInt(1, tour.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -61,41 +69,85 @@ public class TourRepository implements Repository<Tour> {
   }
 
   @Override
-  public Tour query(Tour item) {
+  public Tour query(Tour tour) {
     return null;
   }
 
   @Override
-  public Tour query(int itemId) {
+  public Tour query(int tourId) {
     return null;
   }
 
   @Override
   public Tour queryByCode(String code) {
-    return null;
+    String sql = "SELECT * FROM tour WHERE code = ?";
+    Tour found = null;
+
+    try(PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, code);
+      ResultSet cursor = statement.executeQuery();
+
+      if (cursor.next()) {
+        found = new Tour(
+            cursor.getInt   ("id"),
+            cursor.getString("code"),
+            cursor.getString("name")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return found;
   }
 
   @Override
   public List<Tour> queryAll() {
-    SqlSelectQuery query = new SqlSelectQuery.SqlSelectQueryBuilder()
-        .from("station")
-        .build();
-    List<Tour> stations = new ArrayList<>();
+    StringBuilder sql = new StringBuilder(
+        "SELECT tour.id, tour.code, tour.name, tour.timeStart, tour.timeEnd," +
+        "track.code AS trackCode, train.code AS trainCode "
+    )
+        .append("FROM tour ")
+        .append("LEFT JOIN track ON tour.trackId = track.id ")
+        .append("LEFT JOIN train ON tour.trainId = train.id ");
+    List<Tour> tours = new ArrayList<>();
 
     try ( Connection connection = Database.getConnection();
-          PreparedStatement statement = connection.prepareStatement(query.toQueryString());
+          PreparedStatement statement = connection.prepareStatement(sql.toString());
           ResultSet cursor = statement.executeQuery()) {
       while (cursor.next()) {
-        stations.add(new Tour(
-            cursor.getInt(1),
-            cursor.getString(2),
-            cursor.getString(3)
+        tours.add(new Tour(
+            cursor.getInt   ("id"),
+            cursor.getString("code"),
+            cursor.getString("name"),
+            cursor.getString("trackCode"),
+            cursor.getString("trainCode"),
+            cursor.getDate  ("timeStart"),
+            cursor.getDate  ("timeEnd")
         ));
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
-    return stations;
+    return tours;
+  }
+
+  private int idByCode(String tableName, String code) {
+    String sql = String.format("SELECT * FROM %s WHERE code = ?", tableName);
+    int id = -1;
+
+    try(PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, code);
+      ResultSet cursor = statement.executeQuery();
+
+      if (cursor.next()) {
+        id = cursor.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return id;
   }
 }

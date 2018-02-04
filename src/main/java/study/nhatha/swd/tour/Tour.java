@@ -1,17 +1,20 @@
 package study.nhatha.swd.tour;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Tour {
+  public static final String HEADERS_FORMAT = "%5s %-10s %-10s %-10s %-10s %-20s %-20s";
+  public static final String[] HEADERS = new String[]{"ID", "Code", "Name", "Track", "Train", "Time Start", "Time End"};
+  public static final DateFormat dateFormat = new SimpleDateFormat("YY-MM-DD hh:mm");
   private int id;
   private String code;
   private String name;
-  private String stationCode;
-  private String stationName;
   private String trackCode;
-  private String trackName;
-  private String sourceCode;
-  private String sourceName;
-  private String destinationCode;
-  private String destinationName;
+  private String trainCode;
+  private Date timeStart;
+  private Date timeEnd;
 
   public Tour(String code, String name) {
     this.code = code;
@@ -19,23 +22,21 @@ public class Tour {
   }
 
   public Tour(int id, String code, String name) {
+    this(code, name);
     this.id = id;
-    this.code = code;
-    this.name = name;
   }
 
-  public Tour(int id, String code, String name, String stationCode, String stationName, String trackCode, String trackName, String sourceCode, String sourceName, String destinationCode, String destinationName) {
-    this.id = id;
-    this.code = code;
-    this.name = name;
-    this.stationCode = stationCode;
-    this.stationName = stationName;
+  public Tour(String code, String name, String trackCode, String trainCode, Date timeStart, Date timeEnd) {
+    this(code, name);
     this.trackCode = trackCode;
-    this.trackName = trackName;
-    this.sourceCode = sourceCode;
-    this.sourceName = sourceName;
-    this.destinationCode = destinationCode;
-    this.destinationName = destinationName;
+    this.trainCode = trainCode;
+    this.timeStart = timeStart;
+    this.timeEnd = timeEnd;
+  }
+
+  public Tour(int id, String code, String name, String trackCode, String trainCode, Date timeStart, Date timeEnd) {
+    this(code,name, trackCode, trainCode, timeStart, timeEnd);
+    this.id = id;
   }
 
   public int getId() {
@@ -62,22 +63,6 @@ public class Tour {
     this.name = name;
   }
 
-  public String getStationCode() {
-    return stationCode;
-  }
-
-  public void setStationCode(String stationCode) {
-    this.stationCode = stationCode;
-  }
-
-  public String getStationName() {
-    return stationName;
-  }
-
-  public void setStationName(String stationName) {
-    this.stationName = stationName;
-  }
-
   public String getTrackCode() {
     return trackCode;
   }
@@ -86,51 +71,35 @@ public class Tour {
     this.trackCode = trackCode;
   }
 
-  public String getTrackName() {
-    return trackName;
+  public String getTrainCode() {
+    return trainCode;
   }
 
-  public void setTrackName(String trackName) {
-    this.trackName = trackName;
+  public void setTrainCode(String trainCode) {
+    this.trainCode = trainCode;
   }
 
-  public String getSourceCode() {
-    return sourceCode;
+  public Date getTimeStart() {
+    return timeStart;
   }
 
-  public void setSourceCode(String sourceCode) {
-    this.sourceCode = sourceCode;
+  public void setTimeStart(Date timeStart) {
+    this.timeStart = timeStart;
   }
 
-  public String getSourceName() {
-    return sourceName;
+  public Date getTimeEnd() {
+    return timeEnd;
   }
 
-  public void setSourceName(String sourceName) {
-    this.sourceName = sourceName;
-  }
-
-  public String getDestinationCode() {
-    return destinationCode;
-  }
-
-  public void setDestinationCode(String destinationCode) {
-    this.destinationCode = destinationCode;
-  }
-
-  public String getDestinationName() {
-    return destinationName;
-  }
-
-  public void setDestinationName(String destinationName) {
-    this.destinationName = destinationName;
+  public void setTimeEnd(Date timeEnd) {
+    this.timeEnd = timeEnd;
   }
 
   @Override
   public String toString() {
     return String.format(
-        "%5d %10s %10s %10s %10s %10s %10s %10s %10s %10s %10s",
-        id, code, name, stationCode, stationName, trackCode, trackName, sourceCode, sourceName, destinationCode, destinationName
+        "%5d %-10s %-10s %-10s %-10s %-20s %-20s",
+        id, code, name, trackCode, trainCode, dateFormat.format(timeStart), dateFormat.format(timeEnd)
     );
   }
 }
