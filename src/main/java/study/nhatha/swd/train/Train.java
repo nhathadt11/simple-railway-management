@@ -1,15 +1,19 @@
 package study.nhatha.swd.train;
 
 public class Train {
+  public static final String HEADERS_FORMAT = "%5s %-20s %-20s %10s %15s";
+  public static final String[] HEADERS = new String[]{ "ID", "Code", "Name", "Seat Num", "Seat Price" };
   private int id;
   private String code;
   private String name;
   private int seatNum;
   private float seatPrice;
 
-  public Train(String code, String name) {
-    this.code = code;
-    this.name = name;
+  public Train(String code, String name, int seatNum, float seatPrice) {
+    this.code       = code;
+    this.name       = name;
+    this.seatNum    = seatNum;
+    this.seatPrice  = seatPrice;
   }
 
   public Train(int id, String code, String name) {
@@ -68,6 +72,6 @@ public class Train {
 
   @Override
   public String toString() {
-    return String.format("%5d %10s %10s %5d %10f", id, code, name, seatNum, seatPrice);
+    return String.format("%5d %-20s %-20s %10d %15f", id, code, name, seatNum, seatPrice);
   }
 }

@@ -4,7 +4,6 @@ import study.nhatha.swd.builder.SqlSelectQuery;
 import study.nhatha.swd.generic.Repository;
 import study.nhatha.swd.util.Database;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,11 +19,13 @@ public class TrainRepository implements Repository<Train> {
   }
 
   @Override
-  public void add(Train item) {
-    String sql = "INSERT INTO station(code, name) values(?, ?)";
+  public void add(Train train) {
+    String sql = "INSERT INTO train(code, name, seatNum, seatPrice) values(?, ?, ?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, item.getCode());
-      statement.setString(2, item.getName());
+      statement.setString (1, train.getCode());
+      statement.setString (2, train.getName());
+      statement.setInt    (3, train.getSeatNum());
+      statement.setFloat  (4, train.getSeatPrice());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -32,12 +33,14 @@ public class TrainRepository implements Repository<Train> {
   }
 
   @Override
-  public void add(Iterable<Train> items) {
-    String sql = "INSERT INTO state(code, name) values(?, ?)";
+  public void add(Iterable<Train> trains) {
+    String sql = "INSERT INTO state(code, name, seatNum, seatPrice) VALUES(?, ?, ?, ?)";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      for (Train station : items) {
-        statement.setString(1, station.getCode());
-        statement.setString(2, station.getName());
+      for (Train train : trains) {
+        statement.setString (1, train.getCode());
+        statement.setString (2, train.getName());
+        statement.setInt    (3, train.getSeatNum());
+        statement.setFloat  (4, train.getSeatPrice());
         statement.executeUpdate();
       }
     } catch (SQLException e) {
@@ -46,12 +49,14 @@ public class TrainRepository implements Repository<Train> {
   }
 
   @Override
-  public void update(Train item) {
-    String sql = "UPDATE station SET code = ?, name = ? WHERE id = ?";
+  public void update(Train train) {
+    String sql = "UPDATE train SET code = ?, name = ?, seatNum = ?, seatPrice = ? WHERE id = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, item.getCode());
-      statement.setString(2, item.getName());
-      statement.setInt(3, item.getId());
+      statement.setString (1, train.getCode());
+      statement.setString (2, train.getName());
+      statement.setInt    (3, train.getSeatNum());
+      statement.setFloat  (4, train.getSeatPrice());
+      statement.setInt    (5, train.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -59,10 +64,10 @@ public class TrainRepository implements Repository<Train> {
   }
 
   @Override
-  public void delete(Train item) {
-    String sql = "DELETE FROM station WHERE id = ?";
+  public void delete(Train train) {
+    String sql = "DELETE FROM train WHERE id = ?";
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, item.getId());
+      statement.setInt(1, train.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -70,24 +75,43 @@ public class TrainRepository implements Repository<Train> {
   }
 
   @Override
-  public Train query(Train item) {
+  public Train query(Train train) {
     return null;
   }
 
   @Override
-  public Train query(int itemId) {
+  public Train query(int trainId) {
     return null;
   }
 
   @Override
   public Train queryByCode(String code) {
-    return null;
+    String sql = "SELECT * FROM train WHERE code = ?";
+    Train found = null;
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, code);
+      ResultSet cursor = statement.executeQuery();
+      if (cursor.next()) {
+        found = new Train(
+            cursor.getInt   ("id"),
+            cursor.getString("code"),
+            cursor.getString("name"),
+            cursor.getInt   ("seatNum"),
+            cursor.getFloat ("seatPrice")
+        );
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return found;
   }
 
   @Override
   public List<Train> queryAll() {
     SqlSelectQuery query = new SqlSelectQuery.SqlSelectQueryBuilder()
-        .from("station")
+        .from("train")
         .build();
     List<Train> trains = new ArrayList<>();
 
@@ -95,9 +119,11 @@ public class TrainRepository implements Repository<Train> {
           ResultSet cursor = statement.executeQuery()) {
       while (cursor.next()) {
         trains.add(new Train(
-            cursor.getInt(1),
-            cursor.getString(2),
-            cursor.getString(3)
+            cursor.getInt   ("id"),
+            cursor.getString("code"),
+            cursor.getString("name"),
+            cursor.getInt   ("seatNum"),
+            cursor.getFloat ("seatPrice")
         ));
       }
     } catch (SQLException e) {
