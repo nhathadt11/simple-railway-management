@@ -1,6 +1,10 @@
 package study.nhatha.swd.track;
 
 public class Track {
+  public static final String HEADERS_FORMAT = "%5s %-20s %-30s %-20s %-20s %-20s %-20s";
+  public static final String[] HEADERS = new String[]{
+      "ID", "Code", "Name", "Source Code", "Source Name", "Destination Code", "Destination Name"
+  };
   private int id;
   private String code;
   private String name;
@@ -86,8 +90,8 @@ public class Track {
   @Override
   public String toString() {
     return String.format(
-        "%5d %10s %10s %10s %10s %10s %10s",
-        id, code,name, sourceCode, sourceName, destinationCode, destinationName
+        "%5d %-20s %-30s %-20s %-20s %-20s %-20s",
+        id, code, name, sourceCode, sourceName, destinationCode, destinationName
     );
   }
 }

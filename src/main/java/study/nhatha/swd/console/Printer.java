@@ -14,7 +14,7 @@ public final class Printer {
     System.out.printf(format, args);
   }
 
-  public static void newlinePretty(String format, String[] args) {
+  public static void newlinePretty(String format, Object... args) {
     System.out.printf(format + "%n", args);
   }
 
