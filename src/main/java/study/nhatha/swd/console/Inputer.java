@@ -8,7 +8,7 @@ public final class Inputer {
   }
 
   public static int requestInt() {
-    return SCANNER.nextInt(10);
+    return Integer.valueOf(SCANNER.nextLine().trim());
   }
 
   public static int requestInt(String label) {
@@ -17,7 +17,7 @@ public final class Inputer {
   }
 
   public static float requestFloat() {
-    return SCANNER.nextFloat();
+    return Float.valueOf(SCANNER.nextLine().trim());
   }
 
   public static float requestFloat(String label) {
