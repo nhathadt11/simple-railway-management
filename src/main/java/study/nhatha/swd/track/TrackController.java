@@ -4,16 +4,17 @@ import study.nhatha.swd.console.Inputer;
 import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.generic.AppController;
 import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.station.StationController;
 import study.nhatha.swd.util.Notification;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TrackController implements AppController{
+public class TrackController implements AppController {
   private TrackDao trackDao;
   private StationController stationController;
-  private Menu menu;
+  private SimpleMenu menu;
 
   public TrackController() {
     this.trackDao = new TrackDao();
@@ -31,7 +32,7 @@ public class TrackController implements AppController{
     actions.put("5. Find"     , this::find);
     actions.put("6. List"     , this::all);
 
-    menu = new Menu("TRACK", actions);
+    menu = new SimpleMenu("TRACK", actions);
   }
 
   @Override

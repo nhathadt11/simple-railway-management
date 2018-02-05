@@ -4,6 +4,7 @@ import study.nhatha.swd.console.Inputer;
 import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.generic.AppController;
 import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.track.TrackController;
 import study.nhatha.swd.train.TrainController;
 import study.nhatha.swd.util.Notification;
@@ -16,7 +17,7 @@ public class TourController implements AppController {
   private TrackController trackController;
   private TrainController trainController;
   private TourDao tourDao;
-  private Menu menu;
+  private SimpleMenu menu;
 
   public TourController() {
     this.trackController  = new TrackController();
@@ -35,7 +36,7 @@ public class TourController implements AppController {
     actions.put("5. Find",      this::find);
     actions.put("6. List",      this::all);
 
-    menu = new Menu("TOUR", actions);
+    menu = new SimpleMenu("TOUR", actions);
   }
 
   @Override

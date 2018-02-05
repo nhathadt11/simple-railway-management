@@ -4,14 +4,15 @@ import study.nhatha.swd.console.Inputer;
 import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.generic.AppController;
 import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.util.Notification;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class StationController implements AppController{
+public class StationController implements AppController {
   private StationDao stationDao;
-  private Menu menu;
+  private SimpleMenu menu;
 
   public StationController() {
     this.stationDao = new StationDao();
@@ -21,14 +22,14 @@ public class StationController implements AppController{
   private void initMenu() {
     Map<String, Menu.Action> actions = new LinkedHashMap<>();
 
-    actions.put("1. Add",       StationController.this::add);
-    actions.put("2. Add Many",  StationController.this::addMany);
-    actions.put("3. Update",    StationController.this::update);
-    actions.put("4. Delete",    StationController.this::delete);
-    actions.put("5. Find",      StationController.this::find);
-    actions.put("6. List",      StationController.this::all);
+    actions.put("1. Add",       this::add);
+    actions.put("2. Add Many",  this::addMany);
+    actions.put("3. Update",    this::update);
+    actions.put("4. Delete",    this::delete);
+    actions.put("5. Find",      this::find);
+    actions.put("6. List",      this::all);
 
-    menu = new Menu("STATION", actions);
+    menu = new SimpleMenu("STATION", actions);
   }
 
   @Override

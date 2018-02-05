@@ -4,6 +4,7 @@ import study.nhatha.swd.console.Inputer;
 import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.generic.AppController;
 import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.util.Notification;
 
 import java.util.LinkedHashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 public class TrainController implements AppController {
   private TrainDao trainDao;
-  private Menu menu;
+  private SimpleMenu menu;
 
   public TrainController() {
     this.trainDao = new TrainDao();
@@ -28,7 +29,7 @@ public class TrainController implements AppController {
     actions.put("5. Find",      this::find);
     actions.put("6. List",      this::all);
 
-    menu = new Menu("TRAIN", actions);
+    menu = new SimpleMenu("TRAIN", actions);
   }
 
   @Override

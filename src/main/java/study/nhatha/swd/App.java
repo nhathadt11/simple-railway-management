@@ -1,6 +1,7 @@
 package study.nhatha.swd;
 
 import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.station.StationController;
 import study.nhatha.swd.ticket.TicketController;
 import study.nhatha.swd.tour.TourController;
@@ -32,7 +33,7 @@ public class App
     actions.put("4. Tour"     , tourController::doMenu);
     actions.put("5. Ticket"   , ticketController::doMenu);
 
-    Menu mainMenu = new Menu("MAIN", actions);
+    SimpleMenu mainMenu = new SimpleMenu("MAIN", actions);
     mainMenu.doMenu();
   }
 }

@@ -3,16 +3,17 @@ package study.nhatha.swd.ticket;
 import study.nhatha.swd.console.Inputer;
 import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.menu.Menu;
+import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.tour.TourController;
 import study.nhatha.swd.util.Notification;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TicketController implements Menu.Doable {
+public class TicketController implements Menu {
   private TicketDao ticketDao;
   private TourController tourController;
-  private Menu menu;
+  private SimpleMenu menu;
 
   public TicketController() {
     this.ticketDao = new TicketDao();
@@ -23,12 +24,12 @@ public class TicketController implements Menu.Doable {
   private void initMenu() {
     Map<String, Menu.Action> actions = new LinkedHashMap<>();
 
-    actions.put("1. Add",    this::add);
-    actions.put("2. Update", this::update);
-    actions.put("3. Sell",   this::sell);
-    actions.put("4. All",   this::all);
+    actions.put("1. Add",     this::add);
+    actions.put("2. Update",  this::update);
+    actions.put("3. Sell",    this::sell);
+    actions.put("4. All",     this::all);
 
-    menu = new Menu("TICKET", actions);
+    menu = new SimpleMenu("TICKET", actions);
   }
 
   public void add() {
