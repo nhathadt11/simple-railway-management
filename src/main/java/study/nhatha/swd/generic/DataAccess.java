@@ -2,7 +2,7 @@ package study.nhatha.swd.generic;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface DataAccess<T> {
   void add(T item);
   void add(Iterable<T> items);
   void update(T item);

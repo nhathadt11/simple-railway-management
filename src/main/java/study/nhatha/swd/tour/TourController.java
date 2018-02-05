@@ -15,13 +15,13 @@ import java.util.Map;
 public class TourController implements AppController {
   private TrackController trackController;
   private TrainController trainController;
-  private TourRepository tourRepository;
+  private TourDao tourDao;
   private Menu menu;
 
   public TourController() {
     this.trackController  = new TrackController();
     this.trainController  = new TrainController();
-    this.tourRepository   = new TourRepository();
+    this.tourDao = new TourDao();
     this.initMenu();
   }
 
@@ -42,7 +42,7 @@ public class TourController implements AppController {
   public void add() {
     printTracks();
     printTrains();
-    tourRepository.add(requestTour());
+    tourDao.add(requestTour());
     Notification.success("Tour added.");
   }
 
@@ -55,7 +55,7 @@ public class TourController implements AppController {
   public void update() {
     String code = Inputer.requestString("Find Code? ");
 
-    Tour found = tourRepository.queryByCode(code);
+    Tour found = tourDao.queryByCode(code);
     if (found != null) {
       printTracks();
       printTrains();
@@ -65,7 +65,7 @@ public class TourController implements AppController {
       Tour tour = requestTour();
       tour.setId(found.getId());
 
-      tourRepository.update(tour);
+      tourDao.update(tour);
       Notification.success("Tour updated.");
     } else {
       Notification.error("Tour cannot be found.");
@@ -76,9 +76,9 @@ public class TourController implements AppController {
   public void delete() {
     String code = Inputer.requestString("Find Code? ");
 
-    Tour found = tourRepository.queryByCode(code);
+    Tour found = tourDao.queryByCode(code);
     if (found != null) {
-      tourRepository.delete(found);
+      tourDao.delete(found);
     } else {
       Notification.error("Tour cannot be found");
     }
@@ -94,7 +94,7 @@ public class TourController implements AppController {
     Printer.manyWithHeaders(
         Tour.HEADERS_FORMAT,
         Tour.HEADERS,
-        tourRepository.queryAll()
+        tourDao.queryAll()
     );
   }
 

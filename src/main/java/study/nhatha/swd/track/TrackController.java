@@ -11,12 +11,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class TrackController implements AppController{
-  private TrackRepository trackRepository;
+  private TrackDao trackDao;
   private StationController stationController;
   private Menu menu;
 
   public TrackController() {
-    this.trackRepository = new TrackRepository();
+    this.trackDao = new TrackDao();
     this.stationController = new StationController();
     this.initMenu();
   }
@@ -37,7 +37,7 @@ public class TrackController implements AppController{
   @Override
   public void add() {
     listStations();
-    trackRepository.add(requestTrack());
+    trackDao.add(requestTrack());
   }
 
   @Override
@@ -49,7 +49,7 @@ public class TrackController implements AppController{
   public void update() {
     String code = Inputer.requestString("Find Code? ");
 
-    Track found = trackRepository.queryByCode(code);
+    Track found = trackDao.queryByCode(code);
     if (found != null) {
       Printer.inline("Update for: ");
       Printer.newline(" | ", found.getCode(), found.getName());
@@ -58,7 +58,7 @@ public class TrackController implements AppController{
       Track station = requestTrack();
       station.setId(found.getId());
 
-      trackRepository.update(station);
+      trackDao.update(station);
       Notification.success("Track updated.");
     } else {
       Notification.error("Track cannot be found.");
@@ -69,9 +69,9 @@ public class TrackController implements AppController{
   public void delete() {
     String code = Inputer.requestString("Find Code? ");
 
-    Track found = trackRepository.queryByCode(code);
+    Track found = trackDao.queryByCode(code);
     if (found != null) {
-      trackRepository.delete(found);
+      trackDao.delete(found);
     } else {
       Notification.error("Track cannot be found");
     }
@@ -87,7 +87,7 @@ public class TrackController implements AppController{
     Printer.manyWithHeaders(
         Track.HEADERS_FORMAT,
         Track.HEADERS,
-        trackRepository.queryAll()
+        trackDao.queryAll()
     );
   }
 

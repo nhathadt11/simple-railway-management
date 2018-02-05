@@ -10,11 +10,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class TrainController implements AppController {
-  private TrainRepository trainRepository;
+  private TrainDao trainDao;
   private Menu menu;
 
   public TrainController() {
-    this.trainRepository = new TrainRepository();
+    this.trainDao = new TrainDao();
     this.initMenu();
   }
 
@@ -33,7 +33,7 @@ public class TrainController implements AppController {
 
   @Override
   public void add() {
-    trainRepository.add(requestTrain());
+    trainDao.add(requestTrain());
   }
 
   @Override
@@ -45,7 +45,7 @@ public class TrainController implements AppController {
   public void update() {
     String code = Inputer.requestString("Find Code? ");
 
-    Train found = trainRepository.queryByCode(code);
+    Train found = trainDao.queryByCode(code);
     if (found != null) {
       Printer.inline("Update for: ");
       Printer.newline(" | ", found.getCode(), found.getName());
@@ -53,7 +53,7 @@ public class TrainController implements AppController {
       Train train = requestTrain();
       train.setId(found.getId());
 
-      trainRepository.update(train);
+      trainDao.update(train);
       Notification.success("Train updated.");
     } else {
       Notification.error("Train cannot be found.");
@@ -64,9 +64,9 @@ public class TrainController implements AppController {
   public void delete() {
     String code = Inputer.requestString("Find Code? ");
 
-    Train found = trainRepository.queryByCode(code);
+    Train found = trainDao.queryByCode(code);
     if (found != null) {
-      trainRepository.delete(found);
+      trainDao.delete(found);
     } else {
       Notification.error("Train cannot be found");
     }
@@ -82,7 +82,7 @@ public class TrainController implements AppController {
     Printer.manyWithHeaders(
         Train.HEADERS_FORMAT,
         Train.HEADERS,
-        trainRepository.queryAll()
+        trainDao.queryAll()
     );
   }
 

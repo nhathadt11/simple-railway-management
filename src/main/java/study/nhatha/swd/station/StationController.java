@@ -10,11 +10,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StationController implements AppController{
-  private StationRepository stationRepository;
+  private StationDao stationDao;
   private Menu menu;
 
   public StationController() {
-    this.stationRepository = new StationRepository();
+    this.stationDao = new StationDao();
     this.initMenu();
   }
 
@@ -33,7 +33,7 @@ public class StationController implements AppController{
 
   @Override
   public void add() {
-    stationRepository.add(requestStation());
+    stationDao.add(requestStation());
   }
 
   @Override
@@ -45,7 +45,7 @@ public class StationController implements AppController{
   public void update() {
     String code = Inputer.requestString("Find Code? ");
 
-    Station found = stationRepository.queryByCode(code);
+    Station found = stationDao.queryByCode(code);
     if (found != null) {
       Printer.inline("Update for: ");
       Printer.newline(" | ", found.getCode(), found.getName());
@@ -53,7 +53,7 @@ public class StationController implements AppController{
       Station station = requestStation();
       station.setId(found.getId());
 
-      stationRepository.update(station);
+      stationDao.update(station);
       Notification.success("Station updated.");
     } else {
       Notification.error("Station cannot be found.");
@@ -64,9 +64,9 @@ public class StationController implements AppController{
   public void delete() {
     String code = Inputer.requestString("Find Code? ");
 
-    Station found = stationRepository.queryByCode(code);
+    Station found = stationDao.queryByCode(code);
     if (found != null) {
-      stationRepository.delete(found);
+      stationDao.delete(found);
     } else {
       Notification.error("Station cannot be found");
     }
@@ -82,7 +82,7 @@ public class StationController implements AppController{
     Printer.manyWithHeaders(
         Station.HEADERS_FORMAT,
         Station.HEADERS,
-        stationRepository.queryAll()
+        stationDao.queryAll()
     );
   }
 

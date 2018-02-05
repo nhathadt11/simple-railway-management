@@ -10,12 +10,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class TicketController implements Menu.Doable {
-  private TicketRepository ticketRepository;
+  private TicketDao ticketDao;
   private TourController tourController;
   private Menu menu;
 
   public TicketController() {
-    this.ticketRepository = new TicketRepository();
+    this.ticketDao = new TicketDao();
     this.tourController = new TourController();
     this.initMenu();
   }
@@ -33,13 +33,13 @@ public class TicketController implements Menu.Doable {
 
   public void add() {
     printTours();
-    ticketRepository.add(requestTicket());
+    ticketDao.add(requestTicket());
   }
 
   public void update() {
     String code = Inputer.requestString("Find Code? ");
 
-    Ticket found = ticketRepository.queryByCode(code);
+    Ticket found = ticketDao.queryByCode(code);
     if (found != null) {
       Printer.inline("Update for: ");
       Printer.newline(" | ", found.getCode(), found.getName());
@@ -47,7 +47,7 @@ public class TicketController implements Menu.Doable {
       Ticket ticket = requestTicket();
       ticket.setId(found.getId());
 
-      ticketRepository.update(ticket);
+      ticketDao.update(ticket);
       Notification.success("Ticket updated.");
     } else {
       Notification.error("Ticket cannot be found.");
@@ -57,7 +57,7 @@ public class TicketController implements Menu.Doable {
   public void sell() {
     all();
     String code = Inputer.requestString("Find Code? ");
-    Ticket found = ticketRepository.queryByCode(code);
+    Ticket found = ticketDao.queryByCode(code);
     if (found != null) {
       Printer.inline("Sell: ");
       Printer.newline(" | ", found.getCode(), found.getName());
@@ -65,7 +65,7 @@ public class TicketController implements Menu.Doable {
       Ticket ticket = requestFillingCustomer(found);
       ticket.setId(found.getId());
 
-      ticketRepository.update(ticket);
+      ticketDao.update(ticket);
       Notification.success("Ticket sold.");
     } else {
       Notification.error("Ticket cannot be found.");
@@ -76,7 +76,7 @@ public class TicketController implements Menu.Doable {
     Printer.manyWithHeaders(
         Ticket.HEADERS_FORMAT,
         Ticket.HEADERS,
-        ticketRepository.queryAll()
+        ticketDao.queryAll()
     );
   }
 
