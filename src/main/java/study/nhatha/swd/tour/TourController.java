@@ -7,7 +7,7 @@ import study.nhatha.swd.menu.Menu;
 import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.track.TrackController;
 import study.nhatha.swd.train.TrainController;
-import study.nhatha.swd.util.Notification;
+import study.nhatha.swd.console.Notification;
 
 import java.sql.Date;
 import java.util.LinkedHashMap;

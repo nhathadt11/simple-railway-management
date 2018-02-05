@@ -2,7 +2,7 @@ package study.nhatha.swd.track;
 
 import study.nhatha.swd.generic.DataAccess;
 import study.nhatha.swd.util.Database;
-import study.nhatha.swd.util.Notification;
+import study.nhatha.swd.console.Notification;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

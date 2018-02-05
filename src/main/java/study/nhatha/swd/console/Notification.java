@@ -1,6 +1,4 @@
-package study.nhatha.swd.util;
-
-import study.nhatha.swd.console.Printer;
+package study.nhatha.swd.console;
 
 import java.sql.SQLException;
 

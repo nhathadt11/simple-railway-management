@@ -5,7 +5,7 @@ import study.nhatha.swd.console.Printer;
 import study.nhatha.swd.menu.Menu;
 import study.nhatha.swd.menu.SimpleMenu;
 import study.nhatha.swd.tour.TourController;
-import study.nhatha.swd.util.Notification;
+import study.nhatha.swd.console.Notification;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
