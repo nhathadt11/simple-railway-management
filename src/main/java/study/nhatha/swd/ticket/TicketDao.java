@@ -31,7 +31,7 @@ public class TicketDao implements DataAccess<Ticket> {
 
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -53,7 +53,6 @@ public class TicketDao implements DataAccess<Ticket> {
       statement.setInt    (5, ticket.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
       Notification.error(e);
     }
   }
@@ -65,7 +64,7 @@ public class TicketDao implements DataAccess<Ticket> {
       statement.setInt(1, ticket.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -150,7 +149,7 @@ public class TicketDao implements DataAccess<Ticket> {
         tickets.add(ticket);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return tickets;

@@ -1,6 +1,7 @@
 package study.nhatha.swd.station;
 
 import study.nhatha.swd.builder.SqlSelectQuery;
+import study.nhatha.swd.console.Notification;
 import study.nhatha.swd.generic.DataAccess;
 import study.nhatha.swd.util.Database;
 
@@ -26,7 +27,7 @@ public class StationDao implements DataAccess<Station> {
       statement.setString(2, station.getName());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -40,7 +41,7 @@ public class StationDao implements DataAccess<Station> {
         statement.executeUpdate();
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -53,7 +54,7 @@ public class StationDao implements DataAccess<Station> {
       statement.setInt(3, station.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -64,7 +65,7 @@ public class StationDao implements DataAccess<Station> {
       statement.setInt(1, station.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -94,7 +95,7 @@ public class StationDao implements DataAccess<Station> {
         );
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return found;
@@ -117,7 +118,7 @@ public class StationDao implements DataAccess<Station> {
          ));
        }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return stations;

@@ -1,6 +1,7 @@
 package study.nhatha.swd.train;
 
 import study.nhatha.swd.builder.SqlSelectQuery;
+import study.nhatha.swd.console.Notification;
 import study.nhatha.swd.generic.DataAccess;
 import study.nhatha.swd.util.Database;
 
@@ -44,7 +45,7 @@ public class TrainDao implements DataAccess<Train> {
         statement.executeUpdate();
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 

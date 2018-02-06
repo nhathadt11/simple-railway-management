@@ -46,7 +46,7 @@ public class TrackDao implements DataAccess<Track> {
         statement.executeUpdate();
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 

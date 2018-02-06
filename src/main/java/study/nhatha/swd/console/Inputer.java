@@ -45,7 +45,7 @@ public final class Inputer {
     try {
       date = new Date(DATE_FORMAT.parse(SCANNER.nextLine().trim()).getTime());
     } catch (ParseException e) {
-      e.printStackTrace();
+      Notification.error(e.getMessage());
     }
 
     return date;

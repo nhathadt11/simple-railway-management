@@ -1,5 +1,6 @@
 package study.nhatha.swd.tour;
 
+import study.nhatha.swd.console.Notification;
 import study.nhatha.swd.generic.DataAccess;
 import study.nhatha.swd.util.Database;
 
@@ -29,7 +30,7 @@ public class TourDao implements DataAccess<Tour> {
       statement.setDate   (6, tour.getTimeEnd());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
