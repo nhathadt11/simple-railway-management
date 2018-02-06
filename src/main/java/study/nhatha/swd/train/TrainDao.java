@@ -29,7 +29,7 @@ public class TrainDao implements DataAccess<Train> {
       statement.setFloat  (4, train.getSeatPrice());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -60,7 +60,7 @@ public class TrainDao implements DataAccess<Train> {
       statement.setInt    (5, train.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -71,7 +71,7 @@ public class TrainDao implements DataAccess<Train> {
       statement.setInt(1, train.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -103,7 +103,7 @@ public class TrainDao implements DataAccess<Train> {
         );
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return found;
@@ -128,7 +128,7 @@ public class TrainDao implements DataAccess<Train> {
         ));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return trains;

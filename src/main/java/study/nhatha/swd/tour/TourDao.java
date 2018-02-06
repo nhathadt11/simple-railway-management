@@ -53,7 +53,7 @@ public class TourDao implements DataAccess<Tour> {
       statement.setInt    (7, tour.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -65,7 +65,7 @@ public class TourDao implements DataAccess<Tour> {
       statement.setInt(1, tour.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -96,7 +96,7 @@ public class TourDao implements DataAccess<Tour> {
         );
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return found;
@@ -128,7 +128,7 @@ public class TourDao implements DataAccess<Tour> {
         ));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return tours;
@@ -146,7 +146,7 @@ public class TourDao implements DataAccess<Tour> {
         id = cursor.getInt("id");
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return id;

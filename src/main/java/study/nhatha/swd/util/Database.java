@@ -1,5 +1,7 @@
 package study.nhatha.swd.util;
 
+import study.nhatha.swd.console.Notification;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,7 +23,7 @@ public final class Database {
       username  = PROPERTIES.getProperty("db.jdbc.username");
       password  = PROPERTIES.getProperty("db.jdbc.password");
     } catch (IOException e) {
-      e.printStackTrace();
+      Notification.error(e.getMessage());
     }
   }
 
@@ -30,7 +32,7 @@ public final class Database {
     try {
       connection = DriverManager.getConnection(url, username, password);
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
     return connection;
   }

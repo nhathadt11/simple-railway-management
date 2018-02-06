@@ -29,7 +29,7 @@ public class TrackDao implements DataAccess<Track> {
       statement.setInt    (4, idByCode("station", track.getDestinationCode()));
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -62,8 +62,7 @@ public class TrackDao implements DataAccess<Track> {
       statement.setInt    (5, track.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
-      Notification.error(String.format("Code: %d Message: %s", e.getErrorCode(), e.getMessage()));
+      Notification.error(e);
     }
   }
 
@@ -74,7 +73,7 @@ public class TrackDao implements DataAccess<Track> {
       statement.setInt(1, track.getId());
       statement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
   }
 
@@ -148,7 +147,7 @@ public class TrackDao implements DataAccess<Track> {
         ));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return tracks;
@@ -166,7 +165,7 @@ public class TrackDao implements DataAccess<Track> {
         id = cursor.getInt("id");
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Notification.error(e);
     }
 
     return id;
