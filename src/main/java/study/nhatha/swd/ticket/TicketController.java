@@ -13,7 +13,7 @@ import java.util.Map;
 public class TicketController implements Menu {
   private TicketDao ticketDao;
   private TourController tourController;
-  private SimpleMenu menu;
+  private Menu menu;
 
   public TicketController() {
     this.ticketDao = new TicketDao();

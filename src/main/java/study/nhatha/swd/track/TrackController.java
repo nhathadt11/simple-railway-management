@@ -14,7 +14,7 @@ import java.util.Map;
 public class TrackController implements AppController {
   private TrackDao trackDao;
   private StationController stationController;
-  private SimpleMenu menu;
+  private Menu menu;
 
   public TrackController() {
     this.trackDao = new TrackDao();

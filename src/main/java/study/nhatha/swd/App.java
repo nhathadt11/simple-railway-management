@@ -33,7 +33,7 @@ public class App
     actions.put("4. Tour"     , tourController::doMenu);
     actions.put("5. Ticket"   , ticketController::doMenu);
 
-    SimpleMenu mainMenu = new SimpleMenu("MAIN", actions);
+    Menu mainMenu = new SimpleMenu("MAIN", actions);
     mainMenu.doMenu();
   }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class StationController implements AppController {
   private StationDao stationDao;
-  private SimpleMenu menu;
+  private Menu menu;
 
   public StationController() {
     this.stationDao = new StationDao();

@@ -6,7 +6,7 @@ import study.nhatha.swd.util.Strings;
 
 import java.util.Map;
 
-public class SimpleMenu {
+public class SimpleMenu implements Menu {
   private static final String DECORATION = "---------------------";
   private String name;
   private Map<String, Menu.Action> optionToAction;

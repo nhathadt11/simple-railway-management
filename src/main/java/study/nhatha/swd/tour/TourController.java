@@ -17,7 +17,7 @@ public class TourController implements AppController {
   private TrackController trackController;
   private TrainController trainController;
   private TourDao tourDao;
-  private SimpleMenu menu;
+  private Menu menu;
 
   public TourController() {
     this.trackController  = new TrackController();
